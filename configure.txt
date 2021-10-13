@@ -1,0 +1,9 @@
+domainCode="domain"
+gameCode="code"
+ipVportal="ip"
+ipFE="ip"
+ipDB="ip"
+randString=`date +%s | sha256sum | base64 | head -c 5`
+pwDBDev="IFw5LAU78m"${randString}
+pwDBReal="KQF4PMmsfe"${randString}
+
