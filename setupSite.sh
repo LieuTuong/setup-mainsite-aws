@@ -117,20 +117,34 @@ function setupDB(){
 	ssh -i ~/.ssh/id_rsa $ipDB <<EOF
 
 	mysql -e "CREATE DATABASE ${devDB};"
-	if [ $? -ne 0 ] ;exit ; fi
-	mysql -e "CREATE USER ${devDBUser}@'%' IDENTIFIED BY '${pwdDBDev}';"
+	if [ $? -ne 0 ] ;then exit ; fi
+	mysql -e "CREATE USER ${devDBUser}@'%' IDENTIFIED BY '${pwDBDev}';"
 	mysql -e "GRANT ALL PRIVILEGES ON ${devDB}.* TO ${devDBUser}@'%';"
 
 	
 	mysql -e "CREATE DATABASE ${realDB};"
-	if [ $? -ne 0 ]; exit; fi
-	mysql -e "CREATE USER ${realDBUser}@'%' IDENTIFIED BY '${pwdDBReal}';"
+	#if [ $? -ne 0 ];then exit; fi
+	mysql -e "CREATE USER ${realDBUser}@'%' IDENTIFIED BY '${pwDBReal}';"
 	mysql -e "GRANT ALL PRIVILEGES ON ${realDB}.* TO ${realDBUser}@'%';"
 
 	mysql -e "FLUSH PRIVILEGES;"
 EOF
-	Print "configure MySQL DB success!!!!!!!!!!!!!!!\n"
+
+	echo -e "CREATE DATABASE ${devDB};"
+	echo -e "CREATE USER ${devDBUser}@'%' IDENTIFIED BY '${pwDBDev}';"
+	echo -e "GRANT ALL PRIVILEGES ON ${devDB}.* TO ${devDBUser}@'%';"
+
+	echo -e "CREATE DATABASE ${realDB};"
+	echo -e "CREATE USER ${realDBUser}@'%' IDENTIFIED BY '${pwDBReal}';"
+	echo -e "GRANT ALL PRIVILEGES ON ${realDB}.* TO ${realDBUser}@'%';"
+
+	echo -e "FLUSH PRIVILEGES;"
+
+	Print "\nconfigure MySQL DB success!!!!!!!!!!!!!!!\n"
 	echo "-------------------------------------------"
+
+	echo -e "- Database development: DBName: $devDB | DBUser: $devDBUser | PWD: $pwDBDev" >> $DBFILE
+	echo -e "- Database production: DBName: $realDB | DBUser: $realDBUser | PWD: $pwDBReal" >> $DBFILE
 }
 
 
@@ -151,7 +165,7 @@ done
 
 if [ $check_vportal_nginx = "yes" ];then
 	Print "\tChoose: \n"
-	Print "\t1. domain for dev: dev.xxx.yyy.zzz\n\t2. domain for real: xxx.yyy.zzz\n\t3. both\n"
+	Print "\t1. domain for dev: dev.xxx.yyy.zzz\n\t2. domain for real: xxx.yyy.zzz\n\t3. both (choose thissssss)\n"
 	read nginx_opt
 	while [ $nginx_opt != "1" ] && [ $nginx_opt != "2" ] && [ $nginx_opt != "3" ];
 	do
@@ -181,8 +195,8 @@ done
 echo -e "### Site will be configure is: "
 echo -e "- Domain: $realDomain"
 if [ $check_db = "yes" ];then
-	echo -e "- Database development: DBName: $devDB | DBUser: $devDBUser | PWD: $pwDBDev" | tee -a $DBFILE
-	echo -e "- Database production: DBName: $realDB | DBUser: $realDBUser | PWD: $pwDBReal" | tee -a $DBFILE
+	echo -e "- Database development: DBName: $devDB | DBUser: $devDBUser | PWD: $pwDBDev" 
+	echo -e "- Database production: DBName: $realDB | DBUser: $realDBUser | PWD: $pwDBReal" 
 fi
 
 

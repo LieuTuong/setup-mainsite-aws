@@ -1,8 +1,8 @@
-domainCode="domain"
-gameCode="code"
-ipVportal="ip"
-ipFE="ip"
-ipDB="ip"
+domainCode="jxqy.vnggames.com"
+gameCode="jxqysg"
+ipVportal="cenos@IP"
+ipFE="centos@IP"
+ipDB="centos@IP"
 randString=`date +%s | sha256sum | base64 | head -c 5`
 pwDBDev="IFw5LAU78m"${randString}
 pwDBReal="KQF4PMmsfe"${randString}
