@@ -141,10 +141,11 @@ EOF
 	echo -e "FLUSH PRIVILEGES;"
 
 	Print "\nconfigure MySQL DB success!!!!!!!!!!!!!!!\n"
-	echo "-------------------------------------------"
+	echo -e "-------------------------------------------" | tee -a $DBFILE
 
 	echo -e "- Database development: DBName: $devDB | DBUser: $devDBUser | PWD: $pwDBDev" >> $DBFILE
 	echo -e "- Database production: DBName: $realDB | DBUser: $realDBUser | PWD: $pwDBReal" >> $DBFILE
+
 }
 
 
